@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "struts-2.1.7.dtd" >
+<struts>
+    <package name="student" extends="struts-default" namespace="/">
+        <action name="student_*" class="com.baizhi.action.StudentAction" method="{1}">
+            <result name="showAll">/student/queryStudents.jsp</result>
+            <result name="showLike">/student/queryStudents.jsp</result>
+            <result name="add" type="chain">student_showAll</result>
+            <result name="update" type="chain">student_showAll</result>
+            <result name="delete" type="chain">student_showAll</result>
+        </action>
+    </package>
+</struts>

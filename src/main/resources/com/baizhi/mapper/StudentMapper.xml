@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.StudentDao">
+
+    <!--展示所有-->
+    <select id="queryAll" resultType="Student">
+        select * from s_student
+    </select>
+    <!--根据学生名称或者班级名称模糊查询-->
+    <select id="queryLikeByClazzOrName" resultType="Student">
+        SELECT * FROM s_student
+        <where>
+            <if test="key=='sname'">
+                NAME LIKE '%${name}%'
+            </if>
+            <if test="key=='cname'">
+                clazz like '%${name}%'
+            </if>
+        </where>
+    </select>
+    <!--修改学生信息-->
+    <update id="update">
+        UPDATE s_student
+        <set>
+            <where>
+                <if test="name!=null">
+                    name=#{name},
+                </if>
+
+                <if test="mobile!=null">
+                    mobile=#{mobile},
+                </if>
+                <if test="clazz!=null">
+                    clazz=#{clazz}
+                </if>
+                WHERE id=#{id}
+            </where>
+        </set>
+    </update>
+    <!--添加学生信息-->
+    <insert id="insert">
+         INSERT INTO s_student(name,sex,mobile,clazz) VALUES (#{name},#{sex},#{mobile},#{clazz})
+     </insert>
+    <!--添加学生信息-->
+    <delete id="delete">
+        DELETE FROM S_STUDENT WHERE id=#{id}
+    </delete>
+</mapper>

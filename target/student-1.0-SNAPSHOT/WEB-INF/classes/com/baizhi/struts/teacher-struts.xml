@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "struts-2.1.7.dtd" >
+<struts>
+	<package name="teacher" extends="struts-default" namespace="/">
+		<action name="teacher_*" class="com.baizhi.action.TeacherAction" method="{1}">
+			<result name="showAll">/student/queryTeacher.jsp</result>
+		</action>
+	</package>
+</struts>

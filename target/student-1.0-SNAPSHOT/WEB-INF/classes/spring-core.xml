@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+">
+
+	<!--开启注解扫描-->
+	<context:component-scan base-package="com.baizhi.service,com.baizhi.action,com.baizhi.entity"/>
+	<!--引入外部小配置文件-->
+	 <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+	<!--数据源的使用-->
+	 <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="${Driver}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="username" value="${user}"></property>
+		<property name="password" value="${password}"></property>
+		<property name="initialSize" value="3"></property>
+	</bean>
+
+	<!--创建sqlSessionFactory-->
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+     <property name="dataSource" ref="dataSource"></property>
+	 <property name="mapperLocations"	value="classpath:com/baizhi/mapper/*Mapper.xml"></property>
+		<property name="typeAliasesPackage" value="com.baizhi.entity"></property>
+ 	</bean>
+	
+
+	<!--创建dao实现类的对象-->
+	<bean id="MapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!--注入sqlSessionFactory-->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<!--指定dao接口所在的位置
+             默认Spring管理创建的dao实现类的对象的beanid是接口类名[首字母小写]：
+                 比如： UserDao接口实现类的对象 beanid 是  == userDao
+                 AccountDao ==  accountDao
+         -->
+		<property name="basePackage" value="com.baizhi.dao"></property>
+	</bean>
+	<!--<bean id="Student" class="com.baizhi.entity.Student"></bean>
+	<bean id="User" class="com.baizhi.entity.User"></bean>
+	<bean id="Teacher" class="com.baizhi.entity.Teacher"></bean>-->
+
+
+	<!--配置service-->
+	<bean id="userService" class="com.baizhi.service.UserServiceImpl" autowire="byName"></bean>
+	<bean id="studentService" class="com.baizhi.service.StudentServiceImpl" autowire="byName"></bean>
+	<bean id="teacherService" class="com.baizhi.service.TeacherServiceImpl" autowire="byName"></bean>
+
+	<!--编写额外功能 == 声明事务管理的配置-->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!--注入数据源-->
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!--开启事务注解驱动-->
+     <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+	<!--配置事务通知-->
+	<!--<tx:advice id="advice" transaction-manager="transactionManager">&ndash;&gt;
+		&lt;!&ndash;&lt;!&ndash;配置事务属性&ndash;&gt;&ndash;&gt;
+		&lt;!&ndash;<tx:attributes>&ndash;&gt;
+			&lt;!&ndash;&lt;!&ndash;配置指定的方法如何加事务&ndash;&gt;&ndash;&gt;
+			&lt;!&ndash;<tx:method name="insert"/>&ndash;&gt;
+		&lt;!&ndash;</tx:attributes>&ndash;&gt;
+	&lt;!&ndash;</tx:advice>&ndash;&gt;
+
+	&lt;!&ndash;<aop:config>&ndash;&gt;
+		&lt;!&ndash;&lt;!&ndash;定义切入点&ndash;&gt;&ndash;&gt;
+		&lt;!&ndash;<aop:pointcut id="pct" expression="execution(* com.baizhi.service..*.*(..))"></aop:pointcut>&ndash;&gt;
+		&lt;!&ndash;&lt;!&ndash;编织&ndash;&gt;&ndash;&gt;
+		&lt;!&ndash;<aop:advisor advice-ref="advice" pointcut-ref="pct"></aop:advisor>&ndash;&gt;
+	&lt;!&ndash;</aop:config>-->
+
+	<!--&lt;!&ndash;创建action实现类的对象: 指定为多例创建&ndash;&gt;
+	<bean id="userAction" class="com.baizhi.action.UserAction"
+		  scope="prototype" autowire="byName"></bean>
+	&lt;!&ndash;创建action实现类的对象: 指定为多例创建&ndash;&gt;
+	<bean id="studentAction" class="com.baizhi.action.StudentAction"
+		  scope="prototype" autowire="byName"></bean>
+	&lt;!&ndash;创建action实现类的对象: 指定为多例创建&ndash;&gt;
+	<bean id="TeacherAction" class="com.baizhi.action.TeacherAction"
+		  scope="prototype" autowire="byName"></bean>
+-->
+
+
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

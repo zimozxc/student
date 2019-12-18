@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/main/webapp/student/add.html" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/student/createInteract.html" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/student/queryStudents.html" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/student/queryTeacher.html" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/student/update.html" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/teacher/queryInteract.html" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/user/regist.html" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/xx" charset="UTF-8" />
+  </component>
+</project>
